@@ -6,14 +6,13 @@ public class Player : Subject
 {
     Rigidbody rb;
     InputHandler _input;
-    private ObjectPool _pool;
     public int moveSpeed;
     private bool hitDecoy = false;
-    private bool targetAimed = false;
+    public BoxCollider boxCollider;
+    private bool isShoot = false;
 
     void Start()
     {
-        _pool = gameObject.GetComponent<ObjectPool>();
         GetComponent<CharacterController>();
         rb = GetComponent<Rigidbody>();
         _input = FindObjectOfType<InputHandler>();
@@ -21,7 +20,16 @@ public class Player : Subject
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.R))
+       if (isShoot)
+        {
+            boxCollider.enabled = true;
+        }
+        else if (!isShoot)
+        {
+            boxCollider.enabled = false;
+        }
+
+        /*if (Input.GetKey(KeyCode.R))
         {
             if (!hitDecoy)
             {
@@ -33,7 +41,7 @@ public class Player : Subject
                 hitDecoy = false;
                 Debug.Log("didn't hit a decoy");
             }
-        }
+        }*/
     }
 
     public void MoveUp()
@@ -58,13 +66,30 @@ public class Player : Subject
 
     public void Shoot()
     {
-        Debug.Log("Shoot");
-        
+        isShoot = true;
     }
 
+    public void notShoot()
+    {
+        isShoot = false;
+    }
     public bool HitDecoy()
     {
         return hitDecoy;
     }
-    
+
+    public void Hit()
+    {
+        if (hitDecoy)
+        {
+            hitDecoy = false;
+            Debug.Log("Control normal");
+        }
+        else
+        {
+            hitDecoy = true;
+            Debug.Log("Control reversed");
+        }
+    }
+
 }

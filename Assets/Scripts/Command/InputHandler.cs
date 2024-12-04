@@ -26,6 +26,10 @@ public class InputHandler : MonoBehaviour
         {
             _shoot.Execute();
         }
+        else
+        {
+            _player.notShoot();
+        }
         if (!_player.HitDecoy())
         {
             if (Input.GetKey(KeyCode.W))
