@@ -36,11 +36,6 @@ public class Target : MonoBehaviour
         Pool.Release(this);
     }
 
-    private void OnCollisionEnter(Collision other)
-    {
-        ReturnToPool();
-    }
-
     private void OnDisable()
     {
         ResetTarget();
